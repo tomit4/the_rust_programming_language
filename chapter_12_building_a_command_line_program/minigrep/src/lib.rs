@@ -9,12 +9,27 @@ pub struct Config {
 }
 
 impl Config {
+    /* Chapter 12 implementation
     pub fn new(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("not enough arguments");
         }
         let query: String = args[1].clone();
         let filename: String = args[2].clone();
+    */
+
+    // Chapter 13 implementation
+    pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
+        args.next();
+
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a query string"),
+        };
+        let filename = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a file name"),
+        };
 
         let key: &str = "CASE_INSENSITIVE";
 
